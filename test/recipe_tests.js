@@ -25,7 +25,7 @@ describe("recipes resource get/post", function(){
   it("should save recipes", function(done){
     chai.request(url)
       .post("/recipes")
-      .send({recipeName:'posttest'})
+      .send({recipeName:'posttest', ingredients:'fish lettuce'})
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.body.recipeName).to.eql('posttest');

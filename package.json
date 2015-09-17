@@ -9,7 +9,9 @@
   "author": "Gregory Irwin",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.13.3",
+    "eat": "^0.1.1",
     "express": "^4.13.3",
     "mongoose": "^4.1.7"
   },

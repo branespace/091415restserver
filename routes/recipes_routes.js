@@ -13,12 +13,14 @@ router.get('/recipes', function (req, res) {
         res.json(data);
     });
 });
+
 router.get('/recipes/:id', function (req, res) {
     Recipe.find({_id: req.params.id}, function (err, data) {
         if (err) return handleError(res, err);
         res.json(data);
     });
 });
+
 router.post('/recipes', jsonParser, eatAuth, function (req, res) {
     var newRecipe = new Recipe(req.body);
     newRecipe.cook = req.user.username;
@@ -34,12 +36,14 @@ router.post('/recipes', jsonParser, eatAuth, function (req, res) {
         res.json(data);
     });
 });
+
 router.delete('/recipes/:id', jsonParser, eatAuth, function (req, res) {
     Recipe.remove({_id: req.params.id}, function (err) {
         if (err) return handleError(res, err);
         res.json({msg: req.params.id + ' deleted'});
     });
 });
+
 router.put('/recipes/:id', jsonParser, eatAuth, function (req, res) {
     var newRecipe = req.body;
     Recipe.update({_id: req.params.id}, newRecipe, function (err, data) {
@@ -47,12 +51,14 @@ router.put('/recipes/:id', jsonParser, eatAuth, function (req, res) {
         res.json({link: '/recipes/' + req.params.id});
     });
 });
+
 router.get('/ingredient', function (req, res) {
     Ingredient.find({}, function (err, data) {
         if (err) return handleError(res, err);
         res.json(data);
     });
 });
+
 router.get('/ingredient/:id', function (req, res) {
     Ingredient.find({_id: req.params.id}, function (err, data) {
         if (err) return handleError(res, err);

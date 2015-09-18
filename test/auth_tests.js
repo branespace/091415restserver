@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var User = require(__dirname + '/../models/user');
 var eatAuth = require(__dirname + '/../lib/eat_auth');
 var httpBasic = require(__dirname + '/../lib/http_basic');
+var async = require('async');
 
 describe('http basic', function () {
     it('should parse basic http auth', function () {
@@ -26,13 +27,22 @@ describe('http basic', function () {
 
 describe('auth', function () {
     after(function (done) {
-        User.remove({username: "test"}, function (err) {
-            if (err) throw err;
-            User.remove({username: "test2"}, function (err) {
+        async.waterfall([
+
+                function (callback) {
+                    User.remove({username: "test"}, callback);
+                }.bind(this),
+
+                function (callback) {
+                    User.remove({username: "test2"}, done);
+                }.bind(this)
+
+            ],
+
+            function (err) {
                 if (err) throw err;
-                done();
-            });
-        });
+            }.bind(this));
+
     });
 
     it('should create a user', function (done) {
@@ -50,17 +60,32 @@ describe('auth', function () {
             var user = new User();
             user.username = 'test2';
             user.basic.username = 'test2';
-            user.generateHash('test', function (err, res) {
-                if (err) throw err;
-                user.save(function (err, data) {
-                    if (err) throw err;
-                    user.generateToken(function (err, token) {
-                        if (err) throw err;
+
+            async.waterfall([
+
+                    function (callback) {
+                        user.generateHash('test', callback);
+                    }.bind(this),
+
+                    function (res, callback) {
+                        user.save(callback);
+                    }.bind(this),
+
+                    function (data, num, callback) {
+                        user.generateToken(callback);
+                    }.bind(this),
+
+                    function (token) {
                         this.token = token;
                         done();
-                    }.bind(this));
-                }.bind(this));
-            }.bind(this));
+                    }.bind(this)
+
+                ],
+
+                function (err) {
+                    if (err) throw err;
+                });
+
         });
 
         it('should be able to sign in', function (done) {

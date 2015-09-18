@@ -30,6 +30,11 @@ describe("recipes resource get/post", function () {
             }.bind(this));
         }.bind(this));
     });
+    after(function (done) {
+        User.remove({"basic.username": "test"}, function (err) {
+            done();
+        });
+    });
     it("should return recipes on get", function (done) {
         chai.request(url)
             .get("/recipes")

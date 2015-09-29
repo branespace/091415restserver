@@ -1,3 +1,5 @@
+/*jshint -W083 */
+
 var Recipe = require('./../models/recipe');
 var Ingredient = require('./../models/ingredient');
 var bodyParser = require('body-parser').json();

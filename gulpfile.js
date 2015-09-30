@@ -14,7 +14,7 @@ gulp.task('webpack:dev', function() {
 });
 
 gulp.task('staticfiles:dev', function() {
-  return gulp.src('./app/**/*.html')
+  return gulp.src(['./app/**/*.html', './app/**/*.css'])
     .pipe(gulp.dest('build/'));
 });
 

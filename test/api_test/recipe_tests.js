@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var chai = require("chai");
 var expect = chai.expect;
@@ -6,11 +6,11 @@ var chaihttp = require("chai-http");
 var url = "localhost:3000/api";
 process.env.MONGO_URL = "mongodb://localhost/recipes_test";
 var mongoose = require("mongoose");
-var Recipe = require("./../models/recipe");
+var Recipe = require("./../../models/recipe");
 
 chai.use(chaihttp);
 
-require("./../server.js");
+require("./../../server.js");
 
 describe("recipes resource get/post", function(){
   it("should return recipes on get", function(done){
@@ -37,7 +37,7 @@ describe("recipes resource get/post", function(){
       if (err) throw err;
       done();
     });
-  })
+  });
   describe('recipes resource put/delete', function(){
     var recID;
     var recID2;
@@ -63,7 +63,7 @@ describe("recipes resource get/post", function(){
               if (err) throw err;
               expect(data).to.deep.eql([]);            
               done();
-            })
+            });
         });
     });
     it('should update recipes', function(done){
@@ -79,7 +79,7 @@ describe("recipes resource get/post", function(){
                 if (err) throw err;
                 done();
               });        
-            })
+            });
         });
     });  
   });

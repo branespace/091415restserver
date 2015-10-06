@@ -11,6 +11,7 @@ process.env.APP_SECRET = process.env.APP_SECRET || 'SEKRITSKWIRL';
 var router = require('./routes/recipes_routes');
 var userRouter = require('./routes/user_routes');
 
+app.use(express.static('app');
 app.use('/api/', router);
 app.use('/api/', userRouter);
 

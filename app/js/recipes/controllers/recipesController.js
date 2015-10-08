@@ -1,24 +1,28 @@
 module.exports = function(app) {
-  app.controller('RecipesController', ['$scope', '$http', function($scope, $http) {
+  app.controller('RecipesController',
+      ['$scope', 'Resource',  function($scope, Resource) {
     $scope.recipes = [];
+    $scope.newRecipe = {_id: 'new'};
+    var resource = Resource();
 
-    $scope.getRecipes = function() {
-      $http.get('/api/recipes')
-        .then(function(res) {
-            $scope.recipes = res.data;  
-          }, function(res) {
-            console.log(res);
-          });
-    
+    $scope.clearNewRecipe = function() {
+      $scope.newRecipe = {_id: 'new'};
     };
 
-    $scope.newRecipe = function(recipe) {
-      $http.post('/api/recipes', recipe) 
-        .then(function(res) {
-          $scope.recipes.push(recipe);
-        }, function(res) {
-          console.log(res);
-        });
+    $scope.getRecipes = function() {
+      resource.getAll(function(err, data) {
+        if (err) { return console.log(err); }
+        $scope.recipes = data;
+      });
+    };
+
+    $scope.createRecipe = function(recipe) {
+      delete recipe._id;
+      resource.create(function(err, data) {
+        if (err) { return console.log(err); }
+        $scope.newRecipe = {};
+        $scope.recipes.push(data);
+      }, recipe);
     };
 
     $scope.beginEdit = function(recipe) {
@@ -40,24 +44,20 @@ module.exports = function(app) {
     $scope.updateRecipe = function(recipe) {
       recipe.editing = false;
       recipe.pendingUpdate = true;
-      $http.put('/api/recipes/' + recipe._id, recipe)
-        .then(function(res) {
-          recipe.pendingUpdate = false;
-        }, function(res) {
-          console.log(res);
-        });
+      resource.update(function(err, data) {
+        if (err) { return console.log(err); }
+        recipe.pendingUpdate = false;
+      }, recipe);
     };
 
     $scope.deleteRecipe = function(recipe) {
       recipe.pendingDelete = true;
-      $http.delete('/api/recipes/' + recipe._id)
-        .then(function(res) {
-          $scope.recipes.splice($scope.recipes.indexOf(recipe), 1);
-        }, function(res) {
-          recipe.pendingDelete = false;
-          console.log(res);
-        });
+      resource.remove(function(err, data) {
+        if (err) { return console.log(err); }
+        recipe.pendingDelete = false;
+        $scope.recipes.splice($scope.recipes.indexOf(recipe), 1);
+      }, recipe);
     };
-    
+
   }]);
 };

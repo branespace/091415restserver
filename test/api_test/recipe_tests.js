@@ -54,6 +54,7 @@ describe('recipes resource get/post', function() {
   it('should return recipes on get', function(done) {
     chai.request(url)
             .get('/recipes')
+            .send({token: this.token})
             .end(function(err, res) {
               expect(err).to.eql(null);
               expect(Array.isArray(res.body)).to.eql(true);
@@ -155,16 +156,5 @@ describe('recipes resource get/post', function() {
 
                 });
     });
-  });
-});
-describe('ingredients resource get/post', function() {
-  it('should return ingredients on get', function(done) {
-    chai.request(url)
-            .get('/recipes')
-            .end(function(err, res) {
-              expect(err).to.eql(null);
-              expect(Array.isArray(res.body)).to.eql(true);
-              done();
-            });
   });
 });

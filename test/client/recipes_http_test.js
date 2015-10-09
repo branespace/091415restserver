@@ -41,7 +41,7 @@ describe('recipes controller', function(){
 
     it('should make a POST request', function() {
       $httpBackend.expectPOST('/api/recipes', {recipeName:"testRecipe"}).respond(200, {_id: '1', recipeName:'testRecipe'});
-      $scope.newRecipe({recipeName:'testRecipe'});
+      $scope.createRecipe({recipeName:'testRecipe'});
       $httpBackend.flush();
       expect($scope.recipes[0].recipeName).toBe('testRecipe');
     });

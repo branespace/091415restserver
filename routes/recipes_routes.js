@@ -9,8 +9,8 @@ var eatAuth = require(__dirname + '/../lib/eat_auth');
 
 var router = module.exports = exports = express.Router();
 
-router.get('/recipes', function (req, res) {
-    Recipe.find({}, function (err, data) {
+router.get('/recipes', jsonParser, eatAuth, function (req, res) {
+    Recipe.find({cook: req.user.username}, function (err, data) {
         if (err) return handleError(res, err);
         res.json(data);
     });

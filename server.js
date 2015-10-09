@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/recipes_test');
+mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/recipes');
 
 process.env.APP_SECRET = process.env.APP_SECRET || 'SEKRITSKWIRL';
 

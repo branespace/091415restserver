@@ -6,52 +6,11 @@
   <title>Recipe SAFE</title>
 </head>
 <body data-ng-app="recipesApp">
-  <main data-ng-controller="RecipesController" data-ng-init="getRecipes()">
-    <h1 data-ng-cloak>Recipes App:</h1>
-      <content>
-        RECIPESAFE is a system for storing recipes.  That's...pretty much it.  But it does do this thing.
-        <br/>
-        <br/>
-        <section data-ng-repeat="recipe in recipes"> 
-          <article data-ng-if='!recipe.editing'>
-            <h2>{{recipe.recipeName}}</h2>
-            <h3 class='pendingDelete' data-ng-if='recipe.pendingDelete'>Deleting...</h3>
-            <h3 class='pendingUpdate' data-ng-if='recipe.pendingUpdate'>Updating...</h3>
-            Ingredients:
-            <ul>
-              <li data-ng-repeat="ingredient in recipe.ingredients.split(' ')">
-                {{ingredient}}
-              </li>
-            </ul>
-            <p>{{recipe.recipeBody}}</p>
-            <em>Like it?  Hate it? Blame {{recipe.cook}}</em>
-            <br>
-            <button data-ng-click='beginEdit(recipe)'>Edit Recipe</button>
-            <button data-ng-click='deleteRecipe(recipe)'>Delete</button>
-          </article>
-          <article data-ng-if='recipe.editing'>
-            <div data-recipe-form
-                 data-recipe='recipe'
-                 data-button-text='Save Changes'
-                 data-title='Edit Recipe'
-                 data-save='updateRecipe(recipe)'
-                 data-cancel='cancelEdit(recipe)'>
-            </div>
-                 <!--    <button type='submit' data-ng-disabled='{{recipe.recipeName.join("")}}edit.$invalid'>Save Changes</button> -->
-          </article>
-        </section>
-        <hr>
-        <section>
-          <div data-recipe-form
-               data-recipe='newRecipe'
-               data-button-text='Create Recipe'
-               data-title='New Recipe'
-               data-save='createRecipe(recipe)'
-               data-cancel='clearNewRecipe()'>
-          </div>
-        </section>
-      </content>
-  </main>  
+  <a data-ng-if='loggedIn()' href data-ng-click='logOut()'>
+    Log Out{{username? ' of ' + username : ''}}</a>
+  <main data-ng-view>
+  </main>
   <script src='bundle.js'></script>
+
 </body>
 </html>

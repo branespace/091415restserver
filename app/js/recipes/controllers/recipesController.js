@@ -1,6 +1,13 @@
 module.exports = function(app) {
   app.controller('RecipesController',
-      ['$scope', 'Resource',  function($scope, Resource) {
+      ['$scope', 'Resource', '$http', '$cookies', '$location', function($scope, Resource, $http, $cookies, $location) {
+        
+    var cookie = $cookies.get('token');
+    if (!(cookie && cookie.length)) {
+      $location.path('/signup');
+    }
+
+    $http.defaults.headers.common.token = cookie;
     $scope.recipes = [];
     $scope.newRecipe = {_id: 'new'};
     var resource = Resource();

@@ -1,0 +1,13 @@
+<form data-ng-submit='save({recipe: recipe})'>
+  <label><h3>{{title}}</h3></label><br/>
+  <label>Recipe Name</label>
+  <input type='text' data-ng-model='recipe.recipeName' required><br/>
+  <label>Ingredients:</label>
+  <input type='text' data-ng-model='recipe.ingredients' required><br/>
+  <label>Recipe:</label>
+  <textarea rows='10' cols='80' data-ng-model='recipe.recipeBody' required></textarea><br/>
+  <label>Cook:</label>
+  <input type='text' data-ng-model='recipe.cook' required><br/>
+  <button type='submit'>{{buttonText}}</button>
+  <button type='button' data-ng-click='cancel({recipe: recipe})'>Cancel</button>
+</form>

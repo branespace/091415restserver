@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel='stylesheet' href='style.css'>
+  <meta charset="UTF-8">
+  <title>Recipe SAFE</title>
+</head>
+<body data-ng-app="recipesApp">
+  <a data-ng-if='loggedIn()' href data-ng-click='logOut()'>
+    Log Out{{username? ' of ' + username : ''}}</a>
+  <main data-ng-view>
+  </main>
+  <script src='bundle.js'></script>
+
+</body>
+</html>

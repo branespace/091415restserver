@@ -1,0 +1,9 @@
+label { 
+  display: inline-block; 
+  width: 210px; 
+  text-align: right; 
+}
+
+.pendingUpdate .pendingDelete {
+  color: yellow;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel='stylesheet' href='style.css'>
+  <meta charset="UTF-8">
+  <title>Recipe SAFE</title>
+</head>
+<body data-ng-app="recipesApp">
+  <main data-ng-controller="RecipesController" data-ng-init="getRecipes()">
+    <h1 data-ng-cloak>Recipes App:</h1>
+      <content>
+        RECIPESAFE is a system for storing recipes.  That's...pretty much it.  But it does do this thing.
+        <br/>
+        <br/>
+        <section data-ng-repeat="recipe in recipes"> 
+          <article data-ng-if='!recipe.editing'>
+            <h2>{{recipe.recipeName}}</h2>
+            <h3 class='pendingDelete' data-ng-if='recipe.pendingDelete'>Deleting...</h3>
+            <h3 class='pendingUpdate' data-ng-if='recipe.pendingUpdate'>Updating...</h3>
+            Ingredients:
+            <ul>
+              <li data-ng-repeat="ingredient in recipe.ingredients.split(' ')">
+                {{ingredient}}
+              </li>
+            </ul>
+            <p>{{recipe.recipeBody}}</p>
+            <em>Like it?  Hate it? Blame {{recipe.cook}}</em>
+            <br>
+            <button data-ng-click='beginEdit(recipe)'>Edit Recipe</button>
+            <button data-ng-click='deleteRecipe(recipe)'>Delete</button>
+          </article>
+          <article data-ng-if='recipe.editing'>
+            <form name='{{recipe.recipeName.join("")}}edit' data-ng-submit='updateRecipe(recipe)'>
+              <label for='{{recipe.recipeName.join("")}}name'>Recipe Name:</label>
+              <input type='text' name='{{recipe.recipeName.join("")}}name' data-ng-model='recipe.recipeName' required><br>
+              <label for='{{recipe.recipeName.join("")}}ingredients'>Ingredients:</label>
+              <input type='text' name='{{recipe.recipeName.join("")}}ingredients' data-ng-model='recipe.ingredients' required><br>
+              <label for='{{recipe.recipeName.join("")}}body'>Recipe:</label>
+              <textarea rows='10' cols='80' name='{{recipe.recipeName.join("")}}body' data-ng-model='recipe.recipeBody' required></textarea><br>
+              <label for='{{recipe.recipeName.join("")}}cook'>Chef:</label>
+              <input type='text' name='{{recipe.recipeName.join("")}}cook' data-ng-model='recipe.cook'><br>
+              <button type='submit' data-ng-disabled='{{recipe.recipeName.join("")}}edit.$invalid'>Save Changes</button>
+              <button type='button' data-ng-click='cancelEdit(recipe)'>Cancel</button>
+            </form>
+          </article>
+        </section>
+        <hr>
+        <section>
+            <form name='newRecipeForm' data-ng-submit='newRecipe(recipe)'>
+              <label for='newRecipeName'>Recipe Name:</label>
+              <input type='text' name='newRecipeName' data-ng-model='recipe.recipeName' required><br>
+              <label for='newRecipeIngredients'>Ingredients:</label>
+              <input type='text' name='newRecipeIngredients' data-ng-model='recipe.ingredients' required><br>
+              <label for='newRecipeBody'>Recipe:</label>
+              <textarea rows='10' cols='80' name='newRecipeBody' data-ng-model='recipe.recipeBody' required></textarea><br>
+              <label for='newRecipeChef'>Chef:</label>
+              <input type='text' name='newRecipeChef' data-ng-model='recipe.cook'><br>
+              <button type='submit' data-ng-disabled='newRecipeForm.$invalid'>Save Changes</button>
+              <button type='button' data-ng-click='recipe = {}'>Clear</button>
+            </form>
+        </section>
+      </content>
+  </main>  
+  <script src='bundle.js'></script>
+</body>
+</html>
